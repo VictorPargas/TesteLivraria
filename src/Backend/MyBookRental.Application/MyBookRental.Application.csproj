@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MyBookRental.Communication\MyBookRental.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\MyBookRental.Exceptions\MyBookRental.Exceptions.csproj" />
+    <ProjectReference Include="..\MyBookRetal.Domain\MyBookRental.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
