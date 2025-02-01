@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\MyBookRental.Communication\MyBookRental.Communication.csproj" />
-    <ProjectReference Include="..\..\Shared\MyBookRental.Exceptions\MyBookRental.Exceptions.csproj" />
     <ProjectReference Include="..\MyBookRental.Application\MyBookRental.Application.csproj" />
   </ItemGroup>
 

@@ -24,6 +24,7 @@ namespace MyBookRental.Application.UseCase.User.Register
             if (result.IsValid == false)
             {
                 var errorMessages = result.Errors.Select(e => e.ErrorMessage);
+
                 throw new Exception();
             }
         }
