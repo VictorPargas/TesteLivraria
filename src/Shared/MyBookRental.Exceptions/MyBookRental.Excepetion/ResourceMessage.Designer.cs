@@ -95,5 +95,14 @@ namespace MyBookRental.Excepetion {
                 return ResourceManager.GetString("PASSWORD_EMPTY", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Error unknow.
+        /// </summary>
+        public static string UNKNOWN_ERROR {
+            get {
+                return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
+            }
+        }
     }
 }
