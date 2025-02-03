@@ -1,5 +1,7 @@
 using MyBookRental.API.Filters;
 using MyBookRental.API.Middleware;
+using MyBookRental.Application;
+using MyBookRental.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
+
+builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

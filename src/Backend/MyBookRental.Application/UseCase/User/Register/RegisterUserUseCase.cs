@@ -1,26 +1,45 @@
-﻿using MyBookRental.Application.Services.AutoMapper;
+﻿using AutoMapper;
+using MyBookRental.Application.Services.AutoMapper;
 using MyBookRental.Application.Services.Cryptografy;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
+using MyBookRental.Domain.Repositories;
+using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.User.Register
 {
-    public class RegisterUserUseCase
+    public class RegisterUserUseCase : IRegisterUseCase
     {
-        public ResponseRegisteredUserJson Execute(RequestRegisterUserJson request)
-        {
-            var criptografiaDeSenha = new PasswordEncripter();
-            var autoMapper = new AutoMapper.MapperConfiguration(options =>
-            {
-                options.AddProfile(new AutoMapping());
-            }).CreateMapper();
+        private readonly IUserWriteOnlyRepository _writeOnlyRepository;
+        private readonly IUserReadOnlyRepository _readOnlyRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly PasswordEncripter _passwordEncripter;
 
+        public RegisterUserUseCase(
+            IUserWriteOnlyRepository writeOnlyRepository, 
+            IUserReadOnlyRepository readOnlyRepository,
+            IUnitOfWork unitOfWork,
+            PasswordEncripter passwordEncripter,
+            IMapper mapper)
+        {
+            _writeOnlyRepository = writeOnlyRepository;
+            _readOnlyRepository = readOnlyRepository;
+            _passwordEncripter = passwordEncripter;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+        public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
+        {
             Validate(request);
 
-            var user = autoMapper.Map<Domain.Entities.User>(request);
+            var user = _mapper.Map<Domain.Entities.User>(request);
+            user.Password = _passwordEncripter.Encrypt(request.Password);
 
-            user.Password = criptografiaDeSenha.Encrypt(request.Password);
+            await _writeOnlyRepository.Add(user);
+
+            await _unitOfWork.Commit();
 
             return new ResponseRegisteredUserJson
             {

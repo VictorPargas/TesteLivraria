@@ -11,7 +11,7 @@ namespace MyBookRental.Application.UseCase.User.Register
             RuleFor(user => user.Email).NotEmpty().WithMessage("O email não pode ser vazio!").EmailAddress();
             RuleFor(user => user.Password.Length).GreaterThanOrEqualTo(6);
             RuleFor(user => user.Phone).NotEmpty().Matches(@"^\+?[1-9]\d{1,14}$");
-            RuleFor(User => User.Profile).NotEmpty().Must(type => type == "Administrador" || type == "Usuário");
+            //RuleFor(User => User.Profile).NotEmpty().Must(type => type == "Administrador" || type == "Usuário");
         }
     }
 }

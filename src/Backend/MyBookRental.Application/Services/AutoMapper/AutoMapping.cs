@@ -13,7 +13,8 @@ namespace MyBookRental.Application.Services.AutoMapper
         private void RequestToDomain()
         {
             CreateMap<RequestRegisterUserJson, Domain.Entities.User>()
-                .ForMember(dest => dest.Password, opt => opt.Ignore());
+                .ForMember(dest => dest.Password, opt => opt.Ignore())
+                .ForMember(dest => dest.Profile, opt => opt.MapFrom(src => "Usuário"));         
         }
 
         private void DomainToResponse()

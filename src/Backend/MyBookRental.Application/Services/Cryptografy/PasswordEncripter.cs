@@ -5,10 +5,12 @@ namespace MyBookRental.Application.Services.Cryptografy
 {
     public class PasswordEncripter
     {
+        private readonly string _additionalKey;
+        public PasswordEncripter(string additionalKey) => _additionalKey = additionalKey;
         public string Encrypt(string password)
         {
-            var chaveAddicional = "ABC";
-            var newPassword = $"{password}{chaveAddicional}";
+
+            var newPassword = $"{password}{_additionalKey}";
 
             var bytes = Encoding.UTF8.GetBytes(newPassword);
             var hashByter = SHA512.HashData(bytes);
