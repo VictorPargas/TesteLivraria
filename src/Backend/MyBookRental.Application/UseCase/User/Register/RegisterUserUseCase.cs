@@ -5,6 +5,7 @@ using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
 using MyBookRental.Domain.Repositories;
 using MyBookRental.Domain.Repositories.User;
+using MyBookRental.Excepetion;
 using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.User.Register
@@ -32,7 +33,7 @@ namespace MyBookRental.Application.UseCase.User.Register
         }
         public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {
-            Validate(request);
+            await Validate(request);
 
             var user = _mapper.Map<Domain.Entities.User>(request);
             user.Password = _passwordEncripter.Encrypt(request.Password);
@@ -47,11 +48,15 @@ namespace MyBookRental.Application.UseCase.User.Register
             };
         }
 
-        private void Validate(RequestRegisterUserJson request)
+        private async Task Validate(RequestRegisterUserJson request)
         {
             var validator = new RegisterUserValidator();
 
             var result = validator.Validate(request);
+
+            var emailExist = await _readOnlyRepository.ExistActiveUserWithEmail(request.Email);
+            if (emailExist)
+                result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessage.EMAIL_ALREADY_REGISTRED));
 
             if (result.IsValid == false)
             {

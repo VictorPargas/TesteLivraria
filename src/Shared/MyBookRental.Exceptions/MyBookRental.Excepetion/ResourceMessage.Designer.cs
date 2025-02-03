@@ -61,6 +61,15 @@ namespace MyBookRental.Excepetion {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail já registrado.
+        /// </summary>
+        public static string EMAIL_ALREADY_REGISTRED {
+            get {
+                return ResourceManager.GetString("EMAIL_ALREADY_REGISTRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The e-mail address is invalid.
         /// </summary>
         public static string EMAIL_EMPTY {
