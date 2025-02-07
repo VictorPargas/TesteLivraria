@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Application.Services.AutoMapper;
 using MyBookRental.Application.Services.Cryptografy;
+using MyBookRental.Application.UseCase.Book.Register;
+using MyBookRental.Application.UseCase.BookRental.Register;
 using MyBookRental.Application.UseCase.User.Register;
 
 namespace MyBookRental.Application
@@ -26,6 +28,8 @@ namespace MyBookRental.Application
         private static void AddUseCases(IServiceCollection services)
         {
             services.AddScoped<IRegisterUseCase, RegisterUserUseCase>();
+            services.AddScoped<IRegisterBookUseCase, RegisterBookUseCase>();
+            services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
         }
 
         private static void AddPasswordEncrpited(IServiceCollection services, IConfiguration configuration)

@@ -12,6 +12,6 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
 
         public async Task Add(User user) => await _dbContenxt.Users.AddAsync(user);
 
-        public async Task<bool> ExistActiveUserWithEmail(string email) => await _dbContenxt.Users.AnyAsync(user => user.Email.Equals(email) && user.Active);
+        public async Task<bool> ExistActiveUserWithEmail(string email) => await _dbContenxt.Users.AnyAsync(user => user.Email.Equals(email) && user.Active == 1);
     }
 }

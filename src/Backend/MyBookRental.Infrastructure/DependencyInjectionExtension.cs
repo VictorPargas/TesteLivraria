@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Domain.Enums;
 using MyBookRental.Domain.Repositories;
+using MyBookRental.Domain.Repositories.Book;
+using MyBookRental.Domain.Repositories.BookRental;
 using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Infrastructure.DataAccess;
 using MyBookRental.Infrastructure.DataAccess.Repositories;
@@ -48,6 +50,10 @@ namespace MyBookRental.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
+            services.AddScoped<IBookWriteOnlyRepository, BookRepository>();
+            services.AddScoped<IBookReadOnlyRepository, BookRepository>();
+            services.AddScoped<IBookRentalWriteOnlyRepository, BookRentalRepository>();
+            services.AddScoped<IBookRentalReadOnlyRepository, BookRentalRepository>();
         }
     }
 }

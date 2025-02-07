@@ -8,7 +8,10 @@ namespace MyBookRental.Infrastructure.DataAccess
         public MyBookRentalDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        // public DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; set; }
+
+        public DbSet<BookRental> BookRentals { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
