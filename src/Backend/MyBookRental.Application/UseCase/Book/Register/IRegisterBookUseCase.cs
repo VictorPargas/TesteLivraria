@@ -5,6 +5,6 @@ namespace MyBookRental.Application.UseCase.Book.Register
 {
     public interface IRegisterBookUseCase
     {
-        Task<ResponseRegisteredBookJson> Execute(RequestRegisterBookJson request);
+        Task<ResponseRegisteredBookJson> Execute(RequestBookJson request);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBookRental.API.Attributes;
+using MyBookRental.Application.UseCase.User.ChangePassword;
+using MyBookRental.Application.UseCase.User.List;
 using MyBookRental.Application.UseCase.User.Profile;
 using MyBookRental.Application.UseCase.User.Register;
 using MyBookRental.Application.UseCase.User.Update;
@@ -54,6 +56,21 @@ namespace MyBookRental.API.Controllers
         {
             await useCase.Execute(request);
             return NoContent();
+        }
+
+        [HttpGet("all")]
+        [ProducesResponseType(typeof(IEnumerable<ResponseUserJson>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status403Forbidden)] // Caso o usuário não seja admin
+        [AdminOnly]  // Garante que apenas administradores acessem
+        public async Task<IActionResult> GetAllUsers([FromServices] IListUsersUseCase useCase)
+        {
+            var users = await useCase.Execute();
+
+            if (users == null || !users.Any())
+            {
+                return Ok(new List<ResponseUserJson>());
+            }
+            return Ok(users);
         }
     }
 }

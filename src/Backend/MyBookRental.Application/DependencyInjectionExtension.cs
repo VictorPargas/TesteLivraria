@@ -1,11 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Application.Services.AutoMapper;
+using MyBookRental.Application.UseCase.Author;
+using MyBookRental.Application.UseCase.Book.Get;
 using MyBookRental.Application.UseCase.Book.Register;
 using MyBookRental.Application.UseCase.BookRental.Register;
 using MyBookRental.Application.UseCase.BookRental.Renew;
 using MyBookRental.Application.UseCase.BookRental.Return;
 using MyBookRental.Application.UseCase.Login.DoLogin;
+using MyBookRental.Application.UseCase.Publisher;
+using MyBookRental.Application.UseCase.User.List;
 using MyBookRental.Application.UseCase.User.Profile;
 using MyBookRental.Application.UseCase.User.Register;
 using MyBookRental.Application.UseCase.User.Update;
@@ -34,10 +38,32 @@ namespace MyBookRental.Application
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+            services.AddScoped<IListUsersUseCase, ListUsersUseCase>();
+
+
             services.AddScoped<IRegisterBookUseCase, RegisterBookUseCase>();
-            services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
-            services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();
-            services.AddScoped<IReturnBookRentalUseCase, ReturnBookRentalUseCase>();
+            services.AddScoped<IRegisterAuthorUseCase, RegisterAuthorUseCase>();
+            services.AddScoped<IRegisterPublisherUseCase, RegisterPublisherUseCase>();
+            services.AddScoped<IGetBooksUseCase, GetBooksUseCase>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
+            //services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();
+            //services.AddScoped<IReturnBookRentalUseCase, ReturnBookRentalUseCase>();
         }
     }
 }

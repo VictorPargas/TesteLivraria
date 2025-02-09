@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyBookRental.Domain.Repositories.Book
+﻿namespace MyBookRental.Domain.Repositories.Book
 {
     public interface IBookReadOnlyRepository
     {
         Task<bool> ExistsBookWithISBN(string isbn);
-        Task<IEnumerable<Entities.Book>> GetAllBooks();
+        Task<bool> ExistsPublisher(long publisherId);
+
+        Task<Domain.Entities.Book> GetBookWithDetails(long bookId);
+
+        Task<IList<Entities.Book>> GetAllBooksWithDetails();
     }
 
     public interface IBookWriteOnlyRepository

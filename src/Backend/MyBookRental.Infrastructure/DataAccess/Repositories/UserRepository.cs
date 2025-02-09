@@ -52,5 +52,14 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
         }
 
         public void Update(User user) => _dbContenxt.Users.Update(user);
+
+        public async Task<User?> GetUserByIdentifierAsync(Guid userIdentifier)
+        {
+            return await _dbContenxt.Users.FirstOrDefaultAsync(u => u.UserIdentifier == userIdentifier);
+        }
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _dbContenxt.Users.ToListAsync();
+        }
     }
 }

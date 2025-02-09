@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Domain.Enums;
 using MyBookRental.Domain.Repositories;
+using MyBookRental.Domain.Repositories.Author;
 using MyBookRental.Domain.Repositories.Book;
 using MyBookRental.Domain.Repositories.BookRental;
+using MyBookRental.Domain.Repositories.Publisher;
 using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Domain.Security.Cryptography;
 using MyBookRental.Domain.Security.Tokens;
@@ -65,14 +67,29 @@ namespace MyBookRental.Infrastructure
         private static void AddRepositories(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
             services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
             services.AddScoped<IUserDeleteOnlyRepository, UserRepository>();
+
+
             services.AddScoped<IBookWriteOnlyRepository, BookRepository>();
             services.AddScoped<IBookReadOnlyRepository, BookRepository>();
-            services.AddScoped<IBookRentalWriteOnlyRepository, BookRentalRepository>();
-            services.AddScoped<IBookRentalReadOnlyRepository, BookRentalRepository>();
+
+            // Repositórios de Autores
+            services.AddScoped<IAuthorWriteOnlyRepository, AuthorRepository>();
+            services.AddScoped<IAuthorReadOnlyRepository, AuthorRepository>();
+
+            // Repositórios de Editoras
+            services.AddScoped<IPublisherWriteOnlyRepository, PublisherRepository>();
+            services.AddScoped<IPublisherReadOnlyRepository, PublisherRepository>();
+
+
+
+
+            //services.AddScoped<IBookRentalWriteOnlyRepository, BookRentalRepository>();
+            //services.AddScoped<IBookRentalReadOnlyRepository, BookRentalRepository>();
 
         }
 

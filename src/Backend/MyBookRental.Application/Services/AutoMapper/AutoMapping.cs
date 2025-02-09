@@ -19,7 +19,15 @@ namespace MyBookRental.Application.Services.AutoMapper
                 .ForMember(dest => dest.Password, opt => opt.Ignore())
                 .ForMember(dest => dest.Profile, opt => opt.MapFrom(src => "Usuário"));
 
-            CreateMap<RequestRegisterBookJson, Domain.Entities.Book>();
+            CreateMap<RequestBookJson, Domain.Entities.Book>()
+               .ForMember(dest => dest.BookAuthors, opt => opt.MapFrom(src =>
+                   src.AuthorIds.Select(authorId => new Domain.Entities.BookAuthor { AuthorId = authorId })));
+
+            CreateMap<RequestAuthorJson, Domain.Entities.Author>();
+            CreateMap<RequestPublisherJson, Domain.Entities.Publisher>();
+            CreateMap<RequestBookAuthorJson, Domain.Entities.BookAuthor>();
+
+
 
             CreateMap<RequestRegisterBookRentalJson, Domain.Entities.BookRental>();
 
@@ -30,9 +38,35 @@ namespace MyBookRental.Application.Services.AutoMapper
         {
             CreateMap<Domain.Entities.User, ResponseUserProfileJson>();
 
-            CreateMap<Domain.Entities.Book, ResponseRegisteredBookJson>();
-            CreateMap<Domain.Entities.BookRental, ResponseRegisteredBookRentalJson>();
+            CreateMap<Domain.Entities.Book, ResponseRegisteredBookJson>()
+                 .ForMember(dest => dest.PublisherName, opt => opt.MapFrom(src => src.Publisher.Name))
+                 .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.BookAuthors.Select(ba => ba.Author.Name)));
 
+            CreateMap<Domain.Entities.Author, ResponseRegisteredAuthorJson>();
+            CreateMap<Domain.Entities.Publisher, ResponseRegisteredPublisherJson>();
+            CreateMap<Domain.Entities.BookAuthor, ResponseRegisteredBookAuthorJson>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            CreateMap<Domain.Entities.BookRental, ResponseRegisteredBookRentalJson>();
             CreateMap<Domain.Entities.BookRental, ResponseBookRentalDetailsJson>()
                 .ForMember(dest => dest.RentalId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
