@@ -2,7 +2,7 @@
 {
     public enum DataBaseType
     {
-        SqlServer = 0,
-        MySql = 1,
+        MySql = 0,
+        SqlServer = 1,
     }
 }

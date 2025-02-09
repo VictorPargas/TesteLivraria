@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBookRental.Application.UseCase.BookRental.Register;
+using MyBookRental.Application.UseCase.BookRental.Renew;
+using MyBookRental.Application.UseCase.BookRental.Return;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
 using MyBookRental.Domain.Repositories.BookRental;
 
 namespace MyBookRental.API.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class BookRentalController : ControllerBase
+
+    public class BookRentalController : MyBookRentalController
     {
 
         [HttpPost]
@@ -50,6 +51,27 @@ namespace MyBookRental.API.Controllers
             }
             var response = mapper.Map<IEnumerable<ResponseBookRentalDetailsJson>>(rentals);
             return Ok(response);
+        }
+        [HttpPut("renew")]
+        [ProducesResponseType(typeof(ResponseRenewedBookRentalJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RenewRental(
+           [FromServices] IRenewBookRentalUseCase useCase,
+           [FromBody] RequestRenewBookRentalJson request)
+        {
+            var result = await useCase.Execute(request);
+            return Ok(result);
+        }
+
+        [HttpPut("return")]
+        [ProducesResponseType(typeof(ResponseReturnedBookRentalJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ReturnRental(
+            [FromServices] IReturnBookRentalUseCase useCase,
+            [FromBody] RequestReturnBookRentalJson request)
+        {
+            var result = await useCase.Execute(request);
+            return Ok(result);
         }
     }
 }

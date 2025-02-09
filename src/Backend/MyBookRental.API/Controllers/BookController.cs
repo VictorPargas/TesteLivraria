@@ -7,9 +7,7 @@ using MyBookRental.Domain.Repositories.Book;
 
 namespace MyBookRental.API.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class BookController : ControllerBase
+    public class BookController : MyBookRentalController
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredBookJson), StatusCodes.Status201Created)]

@@ -11,6 +11,8 @@
         public string Status { get; set; } = "Pendente";
         public int RenewalsCount { get; set; } = 0;
 
+        public decimal LateFee { get; set; }
+
         public virtual User User { get; set; }
         public virtual Book Book { get; set; }
     }

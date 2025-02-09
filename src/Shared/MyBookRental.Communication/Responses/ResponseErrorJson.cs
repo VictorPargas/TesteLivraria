@@ -6,9 +6,11 @@
 
         public ResponseErrorJson(IList<string> errors) => Errors = errors;
 
+        public bool TokenIsExpired { get; set; }
+
         public ResponseErrorJson(string error) 
         {
-            Errors = [error];
+            Errors = new List<string> { error };
         }
     }
 }

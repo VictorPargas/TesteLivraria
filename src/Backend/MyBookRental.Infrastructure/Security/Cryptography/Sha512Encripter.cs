@@ -1,12 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using MyBookRental.Domain.Security.Cryptography;
 
-namespace MyBookRental.Application.Services.Cryptografy
+namespace MyBookRental.Infrastructure.Security.Cryptography
 {
-    public class PasswordEncripter
+    public class Sha512Encripter : IPasswordEncripter
     {
         private readonly string _additionalKey;
-        public PasswordEncripter(string additionalKey) => _additionalKey = additionalKey;
+        public Sha512Encripter(string additionalKey) => _additionalKey = additionalKey;
         public string Encrypt(string password)
         {
 

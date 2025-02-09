@@ -1,10 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Application.Services.AutoMapper;
-using MyBookRental.Application.Services.Cryptografy;
 using MyBookRental.Application.UseCase.Book.Register;
 using MyBookRental.Application.UseCase.BookRental.Register;
+using MyBookRental.Application.UseCase.BookRental.Renew;
+using MyBookRental.Application.UseCase.BookRental.Return;
+using MyBookRental.Application.UseCase.Login.DoLogin;
+using MyBookRental.Application.UseCase.User.Profile;
 using MyBookRental.Application.UseCase.User.Register;
+using MyBookRental.Application.UseCase.User.Update;
 
 namespace MyBookRental.Application
 {
@@ -14,7 +18,6 @@ namespace MyBookRental.Application
         {
             AddAutoMapper(services);
             AddUseCases(services);
-            AddPasswordEncrpited(services, configuration);
         }
 
         private static void AddAutoMapper(IServiceCollection services)
@@ -28,15 +31,13 @@ namespace MyBookRental.Application
         private static void AddUseCases(IServiceCollection services)
         {
             services.AddScoped<IRegisterUseCase, RegisterUserUseCase>();
+            services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
+            services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
+            services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             services.AddScoped<IRegisterBookUseCase, RegisterBookUseCase>();
             services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
-        }
-
-        private static void AddPasswordEncrpited(IServiceCollection services, IConfiguration configuration)
-        {
-            var additionalKey = configuration.GetValue<string>("Settings:Password:AdditionalKey");
-
-            services.AddScoped(option => new PasswordEncripter(additionalKey!));
+            services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();
+            services.AddScoped<IReturnBookRentalUseCase, ReturnBookRentalUseCase>();
         }
     }
 }

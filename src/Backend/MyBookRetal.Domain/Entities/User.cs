@@ -12,5 +12,6 @@ namespace MyBookRental.Domain.Entities
         [Column("Perfil")]
         public string Profile { get; set; } = "Usuário";
         public string Password { get; set; } = string.Empty;
+        public Guid UserIdentifier { get; set; } = Guid.NewGuid();
     }
 }
