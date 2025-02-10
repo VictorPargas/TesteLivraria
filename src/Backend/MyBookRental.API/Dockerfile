@@ -3,22 +3,22 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copiar o arquivo da solução
-COPY ../../*.sln .
+COPY ../../../*.sln .
 
 # Copiar os arquivos dos projetos com caminhos ajustados
-COPY ../../src/Backend/MyBookRental.Application/*.csproj ./Backend/MyBookRental.Application/
-COPY ../../src/Backend/MyBookRental.Domain/*.csproj ./Backend/MyBookRental.Domain/
-COPY ../../src/Backend/MyBookRental.Infrastructure/*.csproj ./Backend/MyBookRental.Infrastructure/
-COPY ../../src/Backend/MyBookRental.API/*.csproj ./Backend/MyBookRental.API/
+COPY ../../../src/Backend/MyBookRental.Application/*.csproj ./Backend/MyBookRental.Application/
+COPY ../../../src/Backend/MyBookRental.Domain/*.csproj ./Backend/MyBookRental.Domain/
+COPY ../../../src/Backend/MyBookRental.Infrastructure/*.csproj ./Backend/MyBookRental.Infrastructure/
+COPY ../../../src/Backend/MyBookRental.API/*.csproj ./Backend/MyBookRental.API/
 
-COPY ../../src/Shared/MyBookRental.Communication/*.csproj ./Shared/MyBookRental.Communication/
-COPY ../../src/Shared/MyBookRental.Exceptions/MyBookRental.Exception/*.csproj ./Shared/MyBookRental.Exception/
+COPY ../../../src/Shared/MyBookRental.Communication/*.csproj ./Shared/MyBookRental.Communication/
+COPY ../../../src/Shared/MyBookRental.Exceptions/MyBookRental.Exception/*.csproj ./Shared/MyBookRental.Exception/
 
 # Restaurar dependências
 RUN dotnet restore
 
 # Copiar todos os arquivos do projeto para o container
-COPY ../../ ./ 
+COPY ../../../ ./
 
 # Build da aplicação
 WORKDIR /app/src/Backend/MyBookRental.API
