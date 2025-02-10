@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookRental.Communication"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookRental.API", "src\Backend\MyBookRental.API\MyBookRental.API.csproj", "{8F0E447E-61E0-44DD-94E6-DEEB90386410}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookRental.Excepetion", "src\Shared\MyBookRental.Exceptions\MyBookRental.Excepetion\MyBookRental.Excepetion.csproj", "{4645BC4A-06B5-4B93-AF26-0CC1AEBB2080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookRental.Exceptions", "src\Shared\MyBookRental.Exceptions\MyBookRental.Excepetion\MyBookRental.Exceptions.csproj", "{4645BC4A-06B5-4B93-AF26-0CC1AEBB2080}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

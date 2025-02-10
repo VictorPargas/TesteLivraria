@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyBookRental.Excepetion {
+namespace MyBookRental.Exceptions {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MyBookRental.Excepetion {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyBookRental.Excepetion.ResourceMessage", typeof(ResourceMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyBookRental.Exceptions.ResourceMessage", typeof(ResourceMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

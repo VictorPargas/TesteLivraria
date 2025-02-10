@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MyBookRental.Application.SharedValidators;
 using MyBookRental.Communication.Requests;
-using MyBookRental.Excepetion;
+using MyBookRental.Exceptions;
 namespace MyBookRental.Application.UseCase.User.Register
 {
     public class RegisterUserValidator : AbstractValidator<RequestRegisterUserJson>

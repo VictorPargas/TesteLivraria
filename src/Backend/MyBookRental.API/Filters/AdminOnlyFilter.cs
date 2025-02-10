@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using MyBookRental.Communication.Responses;
 using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Domain.Security.Tokens;
-using MyBookRental.Excepetion;
+using MyBookRental.Exceptions;
 using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.API.Filters

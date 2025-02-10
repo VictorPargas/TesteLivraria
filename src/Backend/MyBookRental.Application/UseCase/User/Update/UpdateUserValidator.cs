@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 using MyBookRental.Communication.Requests;
-using MyBookRental.Excepetion;
+using MyBookRental.Exceptions;
 
 namespace MyBookRental.Application.UseCase.User.Update
 {

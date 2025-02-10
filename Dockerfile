@@ -6,12 +6,12 @@ WORKDIR /App
 COPY MyBookRental.sln ./
 
 COPY src/Backend/MyBookRental.Application/*.csproj ./src/Backend/MyBookRental.Application/
-COPY src/Backend/MyBookRental.Domain/*.csproj ./src/Backend/MyBookRental.Domain/
+COPY src/Backend/MyBookRetal.Domain/*.csproj ./src/Backend/MyBookRetal.Domain/
 COPY src/Backend/MyBookRental.Infrastructure/*.csproj ./src/Backend/MyBookRental.Infrastructure/
 COPY src/Backend/MyBookRental.API/*.csproj ./src/Backend/MyBookRental.API/
 
 COPY src/Shared/MyBookRental.Communication/*.csproj ./src/Shared/MyBookRental.Communication/
-COPY src/Shared/MyBookRental.Exceptions/*.csproj ./src/Shared/MyBookRental.Exceptions/
+COPY src/Shared/MyBookRental.Exceptions/*.csproj ./src/Shared/MyBookRental.Exceptions/    
 
 # Restaurar as dependências como uma camada distinta
 RUN dotnet restore

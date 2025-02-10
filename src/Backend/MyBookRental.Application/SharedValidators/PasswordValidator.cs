@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
-using MyBookRental.Excepetion;
+using MyBookRental.Exceptions;
 
 namespace MyBookRental.Application.SharedValidators
 {

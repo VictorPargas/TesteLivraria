@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MyBookRental.Communication.Responses;
-using MyBookRental.Excepetion;
+using MyBookRental.Exceptions;
 using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.API.Filters
