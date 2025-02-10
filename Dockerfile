@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 
-RUN dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+RUN dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org --store-password-in-clear-text --configfile /tmp/NuGet.Config
 
 # Copiar o arquivo da solução
 COPY MyBookRental.sln .
