@@ -58,9 +58,11 @@ namespace MyBookRental.Infrastructure
         private static void AddDbContext_MySqlServer(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.ConnectionString();
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 35));
+
             services.AddDbContext<MyBookRentalDbContext>(dbContenxtOptions =>
             {
-                dbContenxtOptions.UseSqlServer(connectionString);
+                dbContenxtOptions.UseMySql(connectionString, serverVersion);
             });
         }
 
