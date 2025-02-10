@@ -7,7 +7,7 @@ COPY MyBookRental.sln .
 
 # Copiar os arquivos de cada projeto com caminhos corretos
 COPY src/Backend/MyBookRental.Application/*.csproj ./src/Backend/MyBookRental.Application/
-COPY src/Backend/MyBookRental.Domain/*.csproj ./src/Backend/MyBookRental.Domain/
+COPY src/Backend/MyBookRental.Domain/*.csproj ./src/Backend/MyBookRetal.Domain/
 COPY src/Backend/MyBookRental.Infrastructure/*.csproj ./src/Backend/MyBookRental.Infrastructure/
 COPY src/Backend/MyBookRental.API/*.csproj ./src/Backend/MyBookRental.API/
 
