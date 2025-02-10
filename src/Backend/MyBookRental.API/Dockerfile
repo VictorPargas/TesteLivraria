@@ -2,26 +2,32 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copiar os arquivos de projeto e restaurar as dependências
-COPY ../../*.sln .  # Caminho ajustado para o arquivo .sln
-COPY ../MyBookRental.Application/*.csproj ./MyBookRental.Application/
-COPY ../MyBookRental.Domain/*.csproj ./MyBookRental.Domain/
-COPY ../MyBookRental.Infrastructure/*.csproj ./MyBookRental.Infrastructure/
-COPY ../MyBookRental.Communication/*.csproj ./MyBookRental.Communication/
-COPY ../MyBookRental.Exception/*.csproj ./MyBookRental.Exception/
-COPY ./MyBookRental.API/*.csproj ./MyBookRental.API/
+# Copiar o arquivo da solução
+COPY ../../*.sln .
 
+# Copiar os arquivos dos projetos com caminhos ajustados
+COPY ../../src/Backend/MyBookRental.Application/*.csproj ./Backend/MyBookRental.Application/
+COPY ../../src/Backend/MyBookRental.Domain/*.csproj ./Backend/MyBookRental.Domain/
+COPY ../../src/Backend/MyBookRental.Infrastructure/*.csproj ./Backend/MyBookRental.Infrastructure/
+COPY ../../src/Backend/MyBookRental.API/*.csproj ./Backend/MyBookRental.API/
+
+COPY ../../src/Shared/MyBookRental.Communication/*.csproj ./Shared/MyBookRental.Communication/
+COPY ../../src/Shared/MyBookRental.Exceptions/MyBookRental.Exception/*.csproj ./Shared/MyBookRental.Exception/
+
+# Restaurar dependências
 RUN dotnet restore
 
-# Copiar o restante dos arquivos e construir a aplicação
-COPY ../../ .  # Copiando todo o projeto corretamente
-WORKDIR /app/MyBookRental.API
+# Copiar todos os arquivos do projeto para o container
+COPY ../../ ./ 
+
+# Build da aplicação
+WORKDIR /app/src/Backend/MyBookRental.API
 RUN dotnet publish -c Release -o out
 
 # Usando a imagem runtime do .NET 8.0 para rodar a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/MyBookRental.API/out .
+COPY --from=build /app/src/Backend/MyBookRental.API/out .
 
 # Expondo a porta padrão do ASP.NET Core
 EXPOSE 6501
