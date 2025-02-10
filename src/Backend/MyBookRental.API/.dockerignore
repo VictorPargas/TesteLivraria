@@ -1,0 +1,10 @@
+﻿**/bin/
+**/obj/
+**/*.md
+**/*.user
+**/*.vspscc
+**/*.vssscc
+.vscode/
+.git/
+.gitignore
+docker-compose*

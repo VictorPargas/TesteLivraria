@@ -21,9 +21,9 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
             if (user is null)
                 return;
 
-            var rentals = _dbContenxt.BookRentals.Where(rentals => rentals.UserId == user.Id);
+            var rentals = _dbContenxt.BooksRental.Where(rentals => rentals.UserId == user.Id);
 
-            _dbContenxt.BookRentals.RemoveRange(rentals);
+            _dbContenxt.BooksRental.RemoveRange(rentals);
 
             _dbContenxt.Users.Remove(user);
         }

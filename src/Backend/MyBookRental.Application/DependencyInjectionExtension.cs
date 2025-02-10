@@ -4,6 +4,7 @@ using MyBookRental.Application.Services.AutoMapper;
 using MyBookRental.Application.UseCase.Author;
 using MyBookRental.Application.UseCase.Book.Get;
 using MyBookRental.Application.UseCase.Book.Register;
+using MyBookRental.Application.UseCase.BookRental.List;
 using MyBookRental.Application.UseCase.BookRental.Register;
 using MyBookRental.Application.UseCase.BookRental.Renew;
 using MyBookRental.Application.UseCase.BookRental.Return;
@@ -46,24 +47,10 @@ namespace MyBookRental.Application
             services.AddScoped<IRegisterPublisherUseCase, RegisterPublisherUseCase>();
             services.AddScoped<IGetBooksUseCase, GetBooksUseCase>();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
-            //services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();
-            //services.AddScoped<IReturnBookRentalUseCase, ReturnBookRentalUseCase>();
+            services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
+            services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();
+            services.AddScoped<IReturnBookRentalUseCase, ReturnBookRentalUseCase>();
+            services.AddScoped<IListBookRentalsUseCase, ListBookRentalsUseCase>();
         }
     }
 }

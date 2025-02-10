@@ -27,11 +27,14 @@ namespace MyBookRental.Application.Services.AutoMapper
             CreateMap<RequestPublisherJson, Domain.Entities.Publisher>();
             CreateMap<RequestBookAuthorJson, Domain.Entities.BookAuthor>();
 
+            CreateMap<RequestRegisterBookRentalJson, BookRental>()
+              .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => DateTime.UtcNow))
+              .ForMember(dest => dest.ExpectedReturnDate, opt => opt.MapFrom(src => src.DueDate))
+              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => "Pendente"));
 
 
-            CreateMap<RequestRegisterBookRentalJson, Domain.Entities.BookRental>();
 
-            CreateMap<RequestRenewBookRentalJson, BookRental>();
+
         }
 
         private void DomainToResponse()
@@ -46,43 +49,18 @@ namespace MyBookRental.Application.Services.AutoMapper
             CreateMap<Domain.Entities.Publisher, ResponseRegisteredPublisherJson>();
             CreateMap<Domain.Entities.BookAuthor, ResponseRegisteredBookAuthorJson>();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            CreateMap<Domain.Entities.BookRental, ResponseRegisteredBookRentalJson>();
-            CreateMap<Domain.Entities.BookRental, ResponseBookRentalDetailsJson>()
+            CreateMap<BookRental, ResponseRegisteredBookRentalJson>()
                 .ForMember(dest => dest.RentalId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
-                .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title));
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.BookId))
+                .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => src.RentalDate))
+                .ForMember(dest => dest.ExpectedReturnDate, opt => opt.MapFrom(src => src.ExpectedReturnDate))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.ActualReturnDate == null ? "Em Andamento" : "Finalizado"))
+                .ForMember(dest => dest.UserIdentifier, opt => opt.MapFrom(src => src.User.UserIdentifier)) 
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name));
 
-            CreateMap<BookRental, ResponseRenewedBookRentalJson>()
-               .ForMember(dest => dest.RentalId, opt => opt.MapFrom(src => src.Id))
-               .ForMember(dest => dest.NewDueDate, opt => opt.MapFrom(src => src.DueDate))
-               .ForMember(dest => dest.RenewalsCount, opt => opt.MapFrom(src => src.RenewalsCount))
-               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            CreateMap<BookRental, ResponseReturnedBookRentalJson>()
-               .ForMember(dest => dest.RentalId, opt => opt.MapFrom(src => src.Id))
-               .ForMember(dest => dest.ReturnDate, opt => opt.MapFrom(src => src.ReturnDate))
-               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-               .ForMember(dest => dest.LateFee, opt => opt.MapFrom(src => src.LateFee));
-         }
+
+        }
     }
 }

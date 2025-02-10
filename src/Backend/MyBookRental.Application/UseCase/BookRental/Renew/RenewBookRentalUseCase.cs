@@ -12,54 +12,41 @@ using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.BookRental.Renew
 {
+
     public class RenewBookRentalUseCase : IRenewBookRentalUseCase
     {
         private readonly IBookRentalReadOnlyRepository _readOnlyRepository;
         private readonly IBookRentalWriteOnlyRepository _writeOnlyRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        private const int MaxRenewals = 2;
 
         public RenewBookRentalUseCase(
            IBookRentalReadOnlyRepository readOnlyRepository,
            IBookRentalWriteOnlyRepository writeOnlyRepository,
-           IUnitOfWork unitOfWork,
-           IMapper mapper)
+           IUnitOfWork unitOfWork)
         {
             _readOnlyRepository = readOnlyRepository;
             _writeOnlyRepository = writeOnlyRepository;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
-        public async Task<ResponseRenewedBookRentalJson> Execute(RequestRenewBookRentalJson request)
+        public async Task Execute(long rentalId, RequestRenewBookRentalJson request)
         {
-            var rental = await _readOnlyRepository.GetRentalById(request.RentalId);
-
+            var rental = await _readOnlyRepository.GetRentalById(rentalId);
             if (rental == null)
-                throw new ErrorOnValidationException(new List<string> { "Empréstimo não encontrado." });
+            {
+                throw new ErrorOnValidationException(new List<string> { "Locação não encontrada." });
+            }
 
-            if (rental.Status != "Pendente")
-                throw new ErrorOnValidationException(new List<string> { "Apenas empréstimos pendentes podem ser renovados." });
+            if (request.NewDueDate <= DateTime.UtcNow)
+            {
+                throw new ErrorOnValidationException(new List<string> { "A nova data de devolução deve ser no futuro." });
+            }
 
-            if (rental.ReturnDate != null)
-                throw new ErrorOnValidationException(new List<string> { "Este empréstimo já foi devolvido e não pode ser renovado." });
-
-            if (rental.RenewalsCount >= MaxRenewals)
-                throw new ErrorOnValidationException(new List<string> { $"O empréstimo já atingiu o número máximo de {MaxRenewals} renovações." });
-
-            if (request.NewDueDate <= rental.DueDate)
-                throw new ErrorOnValidationException(new List<string> { "A nova data de devolução deve ser posterior à data atual de devolução." });
-
-            // Atualiza a data de devolução e o contador de renovações
-            rental.DueDate = request.NewDueDate;
-            rental.RenewalsCount += 1;
+            rental.ExpectedReturnDate = request.NewDueDate;
+            rental.Status = "Renovado";
 
             await _writeOnlyRepository.Update(rental);
             await _unitOfWork.Commit();
-
-            return _mapper.Map<ResponseRenewedBookRentalJson>(rental);
         }
     }
 }

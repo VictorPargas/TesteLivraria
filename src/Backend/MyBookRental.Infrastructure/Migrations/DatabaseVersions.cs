@@ -10,5 +10,6 @@ namespace MyBookRental.Infrastructure.Migrations
     {
         public const int TABLE_USER = 1;
         public const int TABLE_BOOKS = 2;
+        public const int TABLE_BOOKSRENTAL = 3;
     }
 }

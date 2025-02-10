@@ -12,9 +12,15 @@ namespace MyBookRental.Application.UseCase.BookRental.Register
     {
         public RegisterBookRentalValidator()
         {
-            RuleFor(rental => rental.UserId).NotEmpty().WithMessage("O ID do usuário é obrigatório.");
-            RuleFor(rental => rental.BookId).NotEmpty().WithMessage("O ID do livro é obrigatório.");
-            RuleFor(rental => rental.DueDate).GreaterThan(DateTime.UtcNow).WithMessage("A data de devolução prevista deve ser no futuro.");
+            RuleFor(rental => rental.UserId)
+               .NotEmpty().WithMessage("O ID do usuário é obrigatório.");
+
+            RuleFor(rental => rental.BookId)
+                .NotEmpty().WithMessage("O ID do livro é obrigatório.");
+
+            RuleFor(rental => rental.DueDate)
+                .GreaterThan(DateTime.UtcNow).WithMessage("A data de devolução prevista deve ser no futuro.")
+                .LessThanOrEqualTo(DateTime.UtcNow.AddDays(30)).WithMessage("O período máximo de locação é de 30 dias.");
         }
     }
 }

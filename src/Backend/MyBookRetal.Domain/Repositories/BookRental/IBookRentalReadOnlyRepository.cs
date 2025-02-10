@@ -4,6 +4,7 @@
     {
         Task<IEnumerable<Domain.Entities.BookRental>> GetAllRentals();
         Task<Domain.Entities.BookRental?> GetRentalById(long rentalId);
+        Task<IEnumerable<Entities.BookRental>> GetRentalsByUserIdentifier(Guid userIdentifier);
         Task<bool> IsBookAvailable(long bookId);
     }
 

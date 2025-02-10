@@ -11,5 +11,7 @@
         public string PublisherName { get; set; } = string.Empty;
 
         public IList<string> Authors { get; set; } = new List<string>();
+
+        public bool IsAvailable { get; set; }
     }
 }

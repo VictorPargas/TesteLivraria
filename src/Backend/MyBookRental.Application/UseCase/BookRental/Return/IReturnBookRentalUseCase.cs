@@ -10,6 +10,6 @@ namespace MyBookRental.Application.UseCase.BookRental.Return
 {
     public interface IReturnBookRentalUseCase
     {
-        Task<ResponseReturnedBookRentalJson> Execute(RequestReturnBookRentalJson request);
+        Task Execute(long rentalId);
     }
 }

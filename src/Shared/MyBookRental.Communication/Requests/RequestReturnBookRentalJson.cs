@@ -2,6 +2,6 @@
 {
     public class RequestReturnBookRentalJson
     {
-        public long RentalId { get; set; } 
+        public int RentalId { get; set; } 
     }
 }

@@ -1,13 +1,11 @@
 ﻿namespace MyBookRental.Communication.Responses
 {
-    public class ResponseRegisteredBookRentalJson
+    public class ResponseBookRentalJson
     {
         public long RentalId { get; set; }
-        public long UserId { get; set; }
-        public long BookId { get; set; }
+        public string BookTitle { get; set; } = string.Empty;
         public DateTime RentalDate { get; set; }
-        public DateTime ExpectedReturnDate { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public DateTime? ActualReturnDate { get; set; }
 
         public Guid UserIdentifier { get; set; }
         public string UserName { get; set; } = string.Empty;

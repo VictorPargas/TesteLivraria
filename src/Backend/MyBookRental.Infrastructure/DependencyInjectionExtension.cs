@@ -85,6 +85,9 @@ namespace MyBookRental.Infrastructure
             services.AddScoped<IPublisherWriteOnlyRepository, PublisherRepository>();
             services.AddScoped<IPublisherReadOnlyRepository, PublisherRepository>();
 
+            services.AddScoped<IBookRentalReadOnlyRepository, BookRentalRepository>();
+            services.AddScoped<IBookRentalWriteOnlyRepository, BookRentalRepository>();
+
 
 
 

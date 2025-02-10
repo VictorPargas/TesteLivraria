@@ -5,6 +5,6 @@ namespace MyBookRental.Application.UseCase.BookRental.Renew
 {
     public interface IRenewBookRentalUseCase
     {
-        Task<ResponseRenewedBookRentalJson> Execute(RequestRenewBookRentalJson request);
+        Task Execute(long rentalId, RequestRenewBookRentalJson request);
     }
 }

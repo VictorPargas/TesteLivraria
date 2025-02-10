@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using MyBookRental.Application.UseCase.Book.Register;
+﻿using AutoMapper;
 using MyBookRental.Domain.Repositories.BookRental;
 using MyBookRental.Domain.Repositories;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
-using MyBookRental.Excepetion.ExceptionsBase;
 using MyBookRental.Domain.Entities;
+using MyBookRental.Excepetion.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.BookRental.Register
 {
@@ -22,10 +16,10 @@ namespace MyBookRental.Application.UseCase.BookRental.Register
         private readonly IMapper _mapper;
 
         public RegisterBookRentalUseCase(
-            IBookRentalWriteOnlyRepository writeOnlyRepository,
-            IBookRentalReadOnlyRepository readOnlyRepository,
-            IUnitOfWork unitOfWork,
-            IMapper mapper)
+           IBookRentalWriteOnlyRepository writeOnlyRepository,
+           IBookRentalReadOnlyRepository readOnlyRepository,
+           IUnitOfWork unitOfWork,
+           IMapper mapper)
         {
             _writeOnlyRepository = writeOnlyRepository;
             _readOnlyRepository = readOnlyRepository;
@@ -35,24 +29,29 @@ namespace MyBookRental.Application.UseCase.BookRental.Register
 
         public async Task<ResponseRegisteredBookRentalJson> Execute(RequestRegisterBookRentalJson request)
         {
+            // Verificação se o livro está disponível para locação
             var isAvailable = await _readOnlyRepository.IsBookAvailable(request.BookId);
             if (!isAvailable)
             {
                 throw new ErrorOnValidationException(new List<string> { "Livro indisponível para locação." });
             }
 
+            // Criação da entidade de locação
             var rental = new Domain.Entities.BookRental
             {
                 UserId = request.UserId,
                 BookId = request.BookId,
                 RentalDate = DateTime.UtcNow,
-                DueDate = request.DueDate,
-                Status = "Pendente"
+                ExpectedReturnDate = request.DueDate,
+                Status = "Pendente",
+                
             };
 
             await _writeOnlyRepository.Add(rental);
+
             await _unitOfWork.Commit();
 
+            // Retorno do objeto mapeado para JSON
             return _mapper.Map<ResponseRegisteredBookRentalJson>(rental);
         }
     }

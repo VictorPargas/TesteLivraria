@@ -1,57 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyBookRental.Domain.Entities;
 using MyBookRental.Domain.Repositories.BookRental;
 
 namespace MyBookRental.Infrastructure.DataAccess.Repositories
 {
-    //public class BookRentalRepository : IBookRentalReadOnlyRepository, IBookRentalWriteOnlyRepository
-    //{
-    //    private readonly MyBookRentalDbContext _dbContext;
+    public class BookRentalRepository(MyBookRentalDbContext context) : IBookRentalReadOnlyRepository, IBookRentalWriteOnlyRepository
+    {
+        private readonly MyBookRentalDbContext _context = context;
 
-    //    public BookRentalRepository(MyBookRentalDbContext dbContext)
-    //    {
-    //        _dbContext = dbContext;
-    //    }
+        public async Task Add(BookRental bookRental)
+        {
+            await _context.BooksRental.AddAsync(bookRental);
 
+            var book = await _context.Books.FindAsync(bookRental.BookId);
+            if (book != null)
+            {
+                book.QuantityAvailable--;
+                _context.Books.Update(book);
+            }
+        }
 
-    //    public async Task Add(BookRental bookRental)
-    //    {
-    //        await _dbContext.BookRentals.AddAsync(bookRental);
-    //    }
+        public async Task<IEnumerable<BookRental>> GetRentalsByUserIdentifier(Guid userIdentifier)
+        {
+            return await _context.BooksRental
+                .Include(r => r.Book)
+                .Include(r => r.User)
+                .Where(r => r.User.UserIdentifier == userIdentifier)
+                .ToListAsync();
+        }
 
-    //    public async Task Update(BookRental bookRental)
-    //    {
-    //        _dbContext.BookRentals.Update(bookRental);
-    //    }
+        public async Task<IEnumerable<BookRental>> GetAllRentals()
+        {
+            return await _context.BooksRental
+                     .Include(r => r.Book)
+                     .Include(r => r.User) // Inclui os dados do usuário, incluindo UserIdentifier
+                     .ToListAsync();
+        }
 
-    //    public async Task<IEnumerable<BookRental>> GetAllRentals()
-    //    {
-    //        return await _dbContext.BookRentals
-    //            .Include(br => br.User)  // Inclui o usuário associado à locação
-    //            .Include(br => br.Book)  // Inclui o livro associado à locação
-    //            .ToListAsync();
-    //    }
+        public async Task<BookRental?> GetRentalById(long rentalId)
+        {
+            return await _context.BooksRental
+                    .Include(r => r.Book)
+                    .Include(r => r.User)
+                    .FirstOrDefaultAsync(r => r.Id == rentalId);
+        }
 
-    //    public async Task<BookRental?> GetRentalById(long rentalId)
-    //    {
-    //        return await _dbContext.BookRentals
-    //            //.Include(br => br.User)
-    //            //.Include(br => br.Book)
-    //            .FirstOrDefaultAsync(br => br.Id == rentalId);
-    //    }
+        public async Task<bool> IsBookAvailable(long bookId)
+        {
+            var book = await _context.Books.FindAsync(bookId);
 
-    //    public async Task<bool> IsBookAvailable(long bookId)
-    //    {
-    //        var rentedCount = await _dbContext.BookRentals
-    //            .CountAsync(br => br.BookId == bookId && br.Status == "Pendente");
+            if (book == null)
+                return false;
 
-    //        var book = await _dbContext.Books.FindAsync(bookId);
-    //        return book != null && rentedCount < book.Quantity;
-    //    }
-    
+            if (!book.Active) // Verifica se o livro está inativo
+                return false;
+
+            if (book.QuantityAvailable <= 0)
+                return false;
+
+            int totalRented = await _context.BooksRental
+                .CountAsync(r => r.BookId == bookId && r.ActualReturnDate == null);
+
+            // Se o número de cópias alugadas for igual ou superior à quantidade disponível, o livro não está disponível
+            if (totalRented >= book.QuantityAvailable)
+                return false;
+
+            return true;
+        }
+
+        public async Task Update(BookRental bookRental)
+        {
+            _context.BooksRental.Update(bookRental);
+            await Task.CompletedTask;
+        }       
+    }
 }
