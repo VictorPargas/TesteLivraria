@@ -4,7 +4,7 @@ using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Domain.Security.Cryptography;
 using MyBookRental.Domain.Services.LoggedUser;
 using MyBookRental.Exceptions;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.User.ChangePassword
 {

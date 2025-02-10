@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using MyBookRental.Domain.Repositories.BookRental;
-using MyBookRental.Domain.Repositories;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
-using MyBookRental.Domain.Entities;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Domain.Repositories;
+using MyBookRental.Domain.Repositories.BookRental;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.BookRental.Register
 {

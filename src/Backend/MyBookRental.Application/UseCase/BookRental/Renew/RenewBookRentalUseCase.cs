@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using MyBookRental.Domain.Repositories.BookRental;
+﻿using MyBookRental.Communication.Requests;
 using MyBookRental.Domain.Repositories;
-using MyBookRental.Communication.Requests;
-using MyBookRental.Communication.Responses;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Domain.Repositories.BookRental;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.BookRental.Renew
 {

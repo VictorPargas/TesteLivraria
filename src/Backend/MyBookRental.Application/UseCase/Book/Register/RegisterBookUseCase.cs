@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using MyBookRental.Domain.Repositories.Book;
-using MyBookRental.Domain.Repositories;
+﻿using AutoMapper;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Domain.Repositories;
+using MyBookRental.Domain.Repositories.Book;
 using MyBookRental.Domain.Services.LoggedUser;
-using FluentValidation;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.Book.Register
 {

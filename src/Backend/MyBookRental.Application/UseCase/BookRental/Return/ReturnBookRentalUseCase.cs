@@ -1,6 +1,6 @@
 ﻿using MyBookRental.Domain.Repositories;
 using MyBookRental.Domain.Repositories.BookRental;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.Application.UseCase.BookRental.Return
 {
