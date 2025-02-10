@@ -13,6 +13,7 @@ using MyBookRental.Application.UseCase.BookRental.Renew;
 using MyBookRental.Application.UseCase.BookRental.Return;
 using MyBookRental.Application.UseCase.Login.DoLogin;
 using MyBookRental.Application.UseCase.Publisher;
+using MyBookRental.Application.UseCase.User.Delete;
 using MyBookRental.Application.UseCase.User.List;
 using MyBookRental.Application.UseCase.User.Profile;
 using MyBookRental.Application.UseCase.User.Register;
@@ -43,6 +44,7 @@ namespace MyBookRental.Application
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             services.AddScoped<IListUsersUseCase, ListUsersUseCase>();
+            services.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
 
 
             services.AddScoped<IRegisterBookUseCase, RegisterBookUseCase>();

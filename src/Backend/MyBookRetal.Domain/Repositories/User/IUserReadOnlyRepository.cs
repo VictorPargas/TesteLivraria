@@ -5,7 +5,7 @@
         public Task<bool> ExistActiveUserWithEmail(string email);
 
         Task<bool> ExistActiveUserWithIdentifier(Guid userIdentifier);
-
+        Task<bool> HasRentals(long userId);
         Task<IEnumerable<Entities.User>> GetAllUsersAsync();
         Task<Entities.User?> GetUserByIdentifierAsync(Guid userIdentifier);
 

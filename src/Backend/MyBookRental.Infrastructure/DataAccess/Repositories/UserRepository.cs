@@ -17,15 +17,17 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
         public async Task<bool> ExistActiveUserWithIdentifier(Guid userIdentifier) => await _dbContenxt.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Active);
         public async Task DeleteAccount(Guid userIdentifier)
         {
-            var user = await _dbContenxt.Users.FirstOrDefaultAsync(user => user.Equals(userIdentifier));
+            var user = await _dbContenxt.Users.FirstOrDefaultAsync(u => u.UserIdentifier == userIdentifier);
+
             if (user is null)
                 return;
 
-            var rentals = _dbContenxt.BooksRental.Where(rentals => rentals.UserId == user.Id);
+            var rentals = _dbContenxt.BooksRental.Where(r => r.UserId == user.Id);
 
             _dbContenxt.BooksRental.RemoveRange(rentals);
-
             _dbContenxt.Users.Remove(user);
+
+            await _dbContenxt.SaveChangesAsync();  // Garantir que as alterações são persistidas
         }
 
         public async Task<User?> GetByEmail(string email)
@@ -60,6 +62,11 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _dbContenxt.Users.ToListAsync();
+        }
+
+        public async Task<bool> HasRentals(long userId)
+        {
+            return await _dbContenxt.BooksRental.AnyAsync(r => r.UserId == userId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBookRental.API.Attributes;
 using MyBookRental.Application.UseCase.User.ChangePassword;
+using MyBookRental.Application.UseCase.User.Delete;
 using MyBookRental.Application.UseCase.User.List;
 using MyBookRental.Application.UseCase.User.Profile;
 using MyBookRental.Application.UseCase.User.Register;
@@ -16,8 +17,8 @@ namespace MyBookRental.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status201Created)]
         public async Task<IActionResult> Register(
-            [FromServices]IRegisterUseCase useCase,
-            [FromBody]RequestRegisterUserJson request)
+            [FromServices] IRegisterUseCase useCase,
+            [FromBody] RequestRegisterUserJson request)
         {
             var result = await useCase.Execute(request);
             return Created(string.Empty, result);
@@ -71,6 +72,31 @@ namespace MyBookRental.API.Controllers
                 return Ok(new List<ResponseUserJson>());
             }
             return Ok(users);
+        }
+
+        [HttpDelete("{userIdentifier}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        [AdminOnly]
+        public async Task<IActionResult> DeleteUserByAdmin(
+            [FromServices] IDeleteUserUseCase useCase,
+            Guid userIdentifier)
+        {
+            await useCase.Execute(userIdentifier);  // Admin informa qual usuário excluir
+            return NoContent();
+        }
+
+        [HttpDelete("self")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> DeleteOwnAccount(
+        [FromServices] IDeleteUserUseCase useCase)
+        {
+            await useCase.Execute();  // O UseCase cuida da recuperação do usuário autenticado
+            return NoContent();
         }
     }
 }

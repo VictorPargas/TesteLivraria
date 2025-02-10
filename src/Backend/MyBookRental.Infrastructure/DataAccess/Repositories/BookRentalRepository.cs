@@ -72,6 +72,11 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
         {
             _context.BooksRental.Update(bookRental);
             await Task.CompletedTask;
-        }       
+        }
+
+        public async Task<bool> HasRentals(Guid userIdentifier)
+        {
+            return await _context.BooksRental.AnyAsync(r => r.User.UserIdentifier == userIdentifier);
+        }
     }
 }
