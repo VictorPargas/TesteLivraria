@@ -1,7 +1,7 @@
 ﻿services:
   api:
     build:
-      context: ../../  # Volte até o diretório correto do projeto
+      context: ../../..  # Volte até o diretório correto do projeto
       dockerfile: src/Backend/MyBookRental.API/Dockerfile
     ports:
       - "5000:5000"
