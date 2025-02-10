@@ -3,6 +3,7 @@ using MyBookRental.API.Attributes;
 using MyBookRental.Application.UseCase.Book.Delete;
 using MyBookRental.Application.UseCase.Book.Get;
 using MyBookRental.Application.UseCase.Book.Register;
+using MyBookRental.Application.UseCase.Book.Search;
 using MyBookRental.Application.UseCase.Book.Update;
 using MyBookRental.Communication.Requests;
 using MyBookRental.Communication.Responses;
@@ -58,5 +59,18 @@ namespace MyBookRental.API.Controllers
             await useCase.Execute(id);
             return NoContent();
         }
+
+        [HttpGet("search")]
+        [ProducesResponseType(typeof(IList<ResponseSearchedBookJson>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> SearchBooks(
+        [FromServices] ISearchBooksUseCase useCase,
+        [FromQuery] string? title,
+        [FromQuery] string? author,
+        [FromQuery] string? isbn)
+            {
+                var response = await useCase.Execute(title, author, isbn);
+                return Ok(response);
+            }
     }
 }

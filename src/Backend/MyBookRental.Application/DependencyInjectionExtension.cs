@@ -5,6 +5,7 @@ using MyBookRental.Application.UseCase.Author;
 using MyBookRental.Application.UseCase.Book.Delete;
 using MyBookRental.Application.UseCase.Book.Get;
 using MyBookRental.Application.UseCase.Book.Register;
+using MyBookRental.Application.UseCase.Book.Search;
 using MyBookRental.Application.UseCase.Book.Update;
 using MyBookRental.Application.UseCase.BookRental.List;
 using MyBookRental.Application.UseCase.BookRental.Register;
@@ -50,6 +51,7 @@ namespace MyBookRental.Application
             services.AddScoped<IUpdateBookUseCase, UpdateBookUseCase>();
             services.AddScoped<IDeleteBookUseCase, DeleteBookUseCase>();
             services.AddScoped<IGetBooksUseCase, GetBooksUseCase>();
+            services.AddScoped<ISearchBooksUseCase, SearchBooksUseCase>();
 
             services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();
             services.AddScoped<IRenewBookRentalUseCase, RenewBookRentalUseCase>();

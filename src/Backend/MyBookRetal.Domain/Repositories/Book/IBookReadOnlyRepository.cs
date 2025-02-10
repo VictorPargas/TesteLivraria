@@ -6,6 +6,8 @@
         Task<bool> ExistsPublisher(long publisherId);
         Task<Domain.Entities.Book> GetBookWithDetails(long bookId);
         Task<IList<Entities.Book>> GetAllBooksWithDetails();
+
+        Task<IList<Entities.Book>> SearchBooks(string? title, string? author, string? isbn);
     }
 
     public interface IBookWriteOnlyRepository

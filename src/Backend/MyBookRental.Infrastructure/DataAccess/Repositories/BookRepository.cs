@@ -22,6 +22,31 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
             _dbContext.Books.Remove(book);
         }
 
+        public async Task<IList<Book>> SearchBooks(string? title, string? author, string? isbn)
+        {
+            var query = _dbContext.Books
+                .Include(b => b.Publisher)
+                .Include(b => b.BookAuthors).ThenInclude(ba => ba.Author)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(b => b.Title.Contains(title));
+            }
+
+            if (!string.IsNullOrEmpty(author))
+            {
+                query = query.Where(b => b.BookAuthors.Any(ba => ba.Author.Name.Contains(author)));
+            }
+
+            if (!string.IsNullOrEmpty(isbn))
+            {
+                query = query.Where(b => b.ISBN == isbn);
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<Book> GetBookWithDetails(long bookId)
         {
             return await _dbContext.Books
