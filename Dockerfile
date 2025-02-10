@@ -1,39 +1,36 @@
-# Usando a imagem base do .NET SDK 8.0 para buildar o projeto
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+# Usando a imagem base do .NET SDK 8.0 com verificação de integridade (sha256)
+FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:35792ea4ad1db051981f62b313f1be3b46b1f45cadbaa3c288cd0d3056eefb83 AS build
+WORKDIR /App
 
+# Copiar apenas arquivos de projeto (.csproj) e a solução (.sln) para restaurar dependências
+COPY MyBookRental.sln ./
 
-RUN dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org --store-password-in-clear-text --configfile /tmp/NuGet.Config
-
-# Copiar o arquivo da solução
-COPY MyBookRental.sln .
-
-# Copiar os arquivos de cada projeto com caminhos corretos
 COPY src/Backend/MyBookRental.Application/*.csproj ./src/Backend/MyBookRental.Application/
-COPY src/Backend/MyBookRetal.Domain/*.csproj ./src/Backend/MyBookRetal.Domain/
+COPY src/Backend/MyBookRental.Domain/*.csproj ./src/Backend/MyBookRental.Domain/
 COPY src/Backend/MyBookRental.Infrastructure/*.csproj ./src/Backend/MyBookRental.Infrastructure/
 COPY src/Backend/MyBookRental.API/*.csproj ./src/Backend/MyBookRental.API/
 
 COPY src/Shared/MyBookRental.Communication/*.csproj ./src/Shared/MyBookRental.Communication/
 COPY src/Shared/MyBookRental.Exceptions/*.csproj ./src/Shared/MyBookRental.Exceptions/
 
-# Restaurar as dependências
+# Restaurar as dependências como uma camada distinta
 RUN dotnet restore
 
-# Copiar todos os arquivos do projeto
+# Copiar o restante dos arquivos do projeto
 COPY . .
 
-# Build da aplicação
-WORKDIR /app/src/Backend/MyBookRental.API
-RUN dotnet publish -c Release -o /app/out
+# Build e publish da aplicação em modo Release
+WORKDIR /App/src/Backend/MyBookRental.API
+RUN dotnet publish -c Release -o /App/out
 
-# Usar a imagem runtime do .NET 8.0 para rodar a aplicação
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-WORKDIR /app
-COPY --from=build /app/out .
+# Construir a imagem final do runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:6c4df091e4e531bb93bdbfe7e7f0998e7ced344f54426b7e874116a3dc3233ff
+WORKDIR /App
+COPY --from=build /App/out .
 
 # Expor a porta padrão do ASP.NET Core
 EXPOSE 6501
 ENV ASPNETCORE_URLS=http://+:6501
 
+# Definir o ponto de entrada da aplicação
 ENTRYPOINT ["dotnet", "MyBookRental.API.dll"]
