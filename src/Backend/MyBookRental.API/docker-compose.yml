@@ -1,16 +1,16 @@
 ﻿services:
   api:
     build:
-      context: .
+      context: ../../  # Volte até o diretório correto do projeto
       dockerfile: src/Backend/MyBookRental.API/Dockerfile
     ports:
       - "5000:5000"
-    depends_on:
-      - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DatabaseType=0
       - ConnectionStrings__ConnectionMySQLServer=Server=db;Database=AluLibrary2;Uid=root;Pwd=root;
+    depends_on:
+      - db
 
   db:
     image: mysql:8.0
