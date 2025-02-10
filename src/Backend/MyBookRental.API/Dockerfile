@@ -2,19 +2,19 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copiar o arquivo da solução
+# Copiar o arquivo da solução (sln) que deve estar na raiz do projeto
 COPY ../../../*.sln .
 
-# Copiar os arquivos dos projetos com caminhos ajustados
+# Copiar os arquivos dos projetos com os caminhos corretos
 COPY ../../../src/Backend/MyBookRental.Application/*.csproj ./Backend/MyBookRental.Application/
 COPY ../../../src/Backend/MyBookRental.Domain/*.csproj ./Backend/MyBookRental.Domain/
 COPY ../../../src/Backend/MyBookRental.Infrastructure/*.csproj ./Backend/MyBookRental.Infrastructure/
 COPY ../../../src/Backend/MyBookRental.API/*.csproj ./Backend/MyBookRental.API/
 
 COPY ../../../src/Shared/MyBookRental.Communication/*.csproj ./Shared/MyBookRental.Communication/
-COPY ../../../src/Shared/MyBookRental.Exceptions/MyBookRental.Exception/*.csproj ./Shared/MyBookRental.Exception/
+COPY ../../../src/Shared/MyBookRental.Exceptions/*.csproj ./Shared/MyBookRental.Exceptions/
 
-# Restaurar dependências
+# Restaurar dependências do .NET
 RUN dotnet restore
 
 # Copiar todos os arquivos do projeto para o container
