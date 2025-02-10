@@ -5,8 +5,7 @@ using MyBookRental.Communication.Responses;
 using MyBookRental.Domain.Repositories.User;
 using MyBookRental.Domain.Security.Tokens;
 using MyBookRental.Exceptions;
-using MyBookRental.Excepetion.ExceptionsBase;
-
+using MyBookRental.Exceptions.ExceptionsBase;
 namespace MyBookRental.API.Filters
 {
     public class AdminOnlyFilter : IAsyncAuthorizationFilter

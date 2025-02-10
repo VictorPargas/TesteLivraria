@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MyBookRental.Communication.Responses;
 using MyBookRental.Exceptions;
-using MyBookRental.Excepetion.ExceptionsBase;
+using MyBookRental.Exceptions.ExceptionsBase;
 
 namespace MyBookRental.API.Filters
 {

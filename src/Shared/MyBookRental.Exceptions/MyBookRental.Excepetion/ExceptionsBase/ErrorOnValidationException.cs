@@ -1,4 +1,4 @@
-﻿namespace MyBookRental.Excepetion.ExceptionsBase
+﻿namespace MyBookRental.Exceptions.ExceptionsBase
 {
     public class ErrorOnValidationException : MyBookRentalException
     {
@@ -7,6 +7,6 @@
         public ErrorOnValidationException(IList<string> errors) : base(string.Empty)
         {
             ErrorMessages = errors;
-        }   
+        }
     }
 }

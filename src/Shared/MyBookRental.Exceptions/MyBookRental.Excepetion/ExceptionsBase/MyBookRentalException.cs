@@ -1,4 +1,4 @@
-﻿namespace MyBookRental.Excepetion.ExceptionsBase
+﻿namespace MyBookRental.Exceptions.ExceptionsBase
 {
     public class MyBookRentalException : SystemException
     {
