@@ -14,5 +14,7 @@ namespace MyBookRental.Domain.Entities
         public Publisher Publisher { get; set; }
 
         public IList<BookAuthor> BookAuthors { get; set; } = [];
+
+        public IList<BookRental> BookRentals { get; set; } = new List<BookRental>();
     }
 }

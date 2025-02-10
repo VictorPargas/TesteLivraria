@@ -4,14 +4,14 @@
     {
         Task<bool> ExistsBookWithISBN(string isbn);
         Task<bool> ExistsPublisher(long publisherId);
-
         Task<Domain.Entities.Book> GetBookWithDetails(long bookId);
-
         Task<IList<Entities.Book>> GetAllBooksWithDetails();
     }
 
     public interface IBookWriteOnlyRepository
     {
         Task Add(Entities.Book book);
+        Task Update(Entities.Book book);
+        Task Delete(Entities.Book book);
     }
 }

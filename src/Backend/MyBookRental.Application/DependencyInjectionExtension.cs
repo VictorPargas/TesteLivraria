@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyBookRental.Application.Services.AutoMapper;
 using MyBookRental.Application.UseCase.Author;
+using MyBookRental.Application.UseCase.Book.Delete;
 using MyBookRental.Application.UseCase.Book.Get;
 using MyBookRental.Application.UseCase.Book.Register;
+using MyBookRental.Application.UseCase.Book.Update;
 using MyBookRental.Application.UseCase.BookRental.List;
 using MyBookRental.Application.UseCase.BookRental.Register;
 using MyBookRental.Application.UseCase.BookRental.Renew;
@@ -45,6 +47,8 @@ namespace MyBookRental.Application
             services.AddScoped<IRegisterBookUseCase, RegisterBookUseCase>();
             services.AddScoped<IRegisterAuthorUseCase, RegisterAuthorUseCase>();
             services.AddScoped<IRegisterPublisherUseCase, RegisterPublisherUseCase>();
+            services.AddScoped<IUpdateBookUseCase, UpdateBookUseCase>();
+            services.AddScoped<IDeleteBookUseCase, DeleteBookUseCase>();
             services.AddScoped<IGetBooksUseCase, GetBooksUseCase>();
 
             services.AddScoped<IRegisterBookRentalUseCase, RegisterBookRentalUseCase>();

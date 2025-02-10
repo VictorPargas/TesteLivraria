@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\MyBookRental.Communication\MyBookRental.Communication.csproj" />
     <ProjectReference Include="..\..\Shared\MyBookRental.Exceptions\MyBookRental.Exceptions.csproj" />
+    <ProjectReference Include="..\MyBookRental.Infrastructure\MyBookRental.Infrastructure.csproj" />
     <ProjectReference Include="..\MyBookRetal.Domain\MyBookRental.Domain.csproj" />
   </ItemGroup>
 

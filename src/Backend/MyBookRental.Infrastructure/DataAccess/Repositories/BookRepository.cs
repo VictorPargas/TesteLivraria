@@ -12,6 +12,16 @@ namespace MyBookRental.Infrastructure.DataAccess.Repositories
 
         public async Task Add(Book book) => await _dbContext.Books.AddAsync(book);
 
+        public async Task Update(Book book)
+        {
+            _dbContext.Books.Update(book);
+        }
+
+        public async Task Delete(Book book)
+        {
+            _dbContext.Books.Remove(book);
+        }
+
         public async Task<Book> GetBookWithDetails(long bookId)
         {
             return await _dbContext.Books
