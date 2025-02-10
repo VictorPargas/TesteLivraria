@@ -7,8 +7,6 @@
       - "6501:6501"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DatabaseType=0
-      - ConnectionStrings__ConnectionMySQLServer=Server=db;Database=AluLibrary2;Uid=root;Pwd=root;
     depends_on:
       - db
 
@@ -17,7 +15,7 @@
     container_name: mybookrental-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: AluLibrary2
+      MYSQL_DATABASE: AluLibrary
     ports:
       - "3306:3306"
     volumes:
