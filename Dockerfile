@@ -2,6 +2,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
+
+RUN dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
 # Copiar o arquivo da solução
 COPY MyBookRental.sln .
 
